@@ -93,8 +93,10 @@ enum AttrTypes_t {
 
 	// version 12.x
 	ATTR_OPENCONTAINER = 39,
-	ATTR_REFLECT = 40,
-	ATTR_BOOST = 41,
+	// ATTR_PODIUMOUTFIT = 40, // mapeditor
+	// ATTR_TIER = 41, // mapeditor
+	ATTR_REFLECT = 42,
+	ATTR_BOOST = 43,
 };
 
 enum Attr_ReadValue {
