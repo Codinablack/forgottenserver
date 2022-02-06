@@ -1044,6 +1044,10 @@ class LuaScriptInterface
 
 		static int luaPlayerGetStoreInbox(lua_State* L);
 
+		static int luaPlayerIsNearDepotBox(lua_State* L);
+
+		static int luaPlayerGetIdleTime(lua_State* L);
+
 		// Monster
 		static int luaMonsterCreate(lua_State* L);
 
