@@ -600,19 +600,6 @@ Attr_ReadValue Item::readAttr(AttrTypes_t attr, PropStream& propStream)
 
 		//12+ compatibility
 		case ATTR_OPENCONTAINER:
-		case ATTR_TIER: {
-			if (!propStream.skip(1)) {
-				return ATTR_READ_ERROR;
-			}
-			break;
-		}
-
-		case ATTR_PODIUMOUTFIT: {
-			if (!propStream.skip(15)) {
-				return ATTR_READ_ERROR;
-			}
-			break;
-		}
 
 		case ATTR_REFLECT: {
 			uint16_t size;

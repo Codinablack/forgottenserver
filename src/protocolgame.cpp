@@ -1266,6 +1266,16 @@ void ProtocolGame::sendWorldLight(LightInfo lightInfo)
 	writeToOutputBuffer(msg);
 }
 
+void ProtocolGame::sendWorldTime()
+{
+	int16_t time = g_game.getWorldTime();
+	NetworkMessage msg;
+	msg.addByte(0xEF);
+	msg.addByte(time / 60); // hour
+	msg.addByte(time % 60); // min
+	writeToOutputBuffer(msg);
+}
+
 void ProtocolGame::sendCreatureWalkthrough(const Creature* creature, bool walkthrough)
 {
 	if (!canSee(creature)) {
@@ -2561,6 +2571,7 @@ void ProtocolGame::sendAddCreature(const Creature* creature, const Position& pos
 
 	//gameworld light-settings
 	sendWorldLight(g_game.getWorldLightInfo());
+	sendWorldTime();
 
 	//player light level
 	sendCreatureLight(creature);
