@@ -58,8 +58,7 @@ ec.onDropLoot = {}
 ec.onSpawn = {}
 
 EventCallback = {
-register = function (self, index)
-	register = function (self, triggerIndex)
+	register = function(self, triggerIndex)
 		if isScriptsInterface() then
 			local eventType = rawget(self, 'eventType')
 			local callback = rawget(self, 'callback')
@@ -74,12 +73,13 @@ register = function (self, index)
 				callback = callback,
 				triggerIndex = tonumber(triggerIndex) or 0
 			}
-			table.sort(eventData, function (ecl, ecr) return ecl.triggerIndex < ecr.triggerIndex end)
+			table.sort(eventData, function(ecl, ecr) return ecl.triggerIndex < ecr.triggerIndex end)
 			self.eventType = nil
 			self.callback = nil
 		end
-	end,	
-	clear = function (self)
+	end,
+
+	clear = function(self)
 		EventCallbackData = {}
 		for i = 1, EVENT_CALLBACK_LAST do
 			EventCallbackData[i] = {maxn = 0}
