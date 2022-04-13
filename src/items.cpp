@@ -1153,7 +1153,7 @@ void Items::parseItemNode(const pugi::xml_node& itemNode, uint16_t id)
 					break;
 				}
 
-case ITEM_PARSE_REFLECTPERCENTALL: {
+				case ITEM_PARSE_REFLECTPERCENTALL: {
 					int16_t value = pugi::cast<int16_t>(valueAttribute.value());
 					for (auto& i : abilities.reflect) {
 						i.percent += value;
