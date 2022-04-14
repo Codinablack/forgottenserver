@@ -7,6 +7,7 @@
 #include "luascript.h"
 #include "baseevents.h"
 #include "enums.h"
+#include "vocation.h"
 
 class CreatureEvent;
 using CreatureEvent_ptr = std::unique_ptr<CreatureEvent>;
@@ -25,6 +26,8 @@ enum CreatureEventType_t {
 	CREATURE_EVENT_HEALTHCHANGE,
 	CREATURE_EVENT_MANACHANGE,
 	CREATURE_EVENT_EXTENDED_OPCODE, // otclient additional network opcodes
+
+	CREATURE_EVENT_ONVOCATIONCHANGE,
 };
 
 class CreatureEvent final : public Event
@@ -68,6 +71,7 @@ class CreatureEvent final : public Event
 		bool executeTextEdit(Player* player, Item* item, const std::string& text);
 		void executeHealthChange(Creature* creature, Creature* attacker, CombatDamage& damage);
 		void executeManaChange(Creature* creature, Creature* attacker, CombatDamage& damage);
+		bool executeOnVocationChange(Player* player, Vocation* oldVocation, Vocation* newVocation);
 		void executeExtendedOpcode(Player* player, uint8_t opcode, const std::string& buffer);
 		//
 

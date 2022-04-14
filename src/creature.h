@@ -563,6 +563,10 @@ class Creature : virtual public Thing
 		friend class Game;
 		friend class Map;
 		friend class LuaScriptInterface;
+		friend class WeaponMelee;
+		friend class WeaponDistance;
+		friend class Weapon;
+		friend class Combat;
 };
 
 #endif

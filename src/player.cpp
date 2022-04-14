@@ -68,6 +68,16 @@ bool Player::setVocation(uint16_t vocId)
 	if (!voc) {
 		return false;
 	}
+
+	const auto& events = getCreatureEvents(CREATURE_EVENT_ONVOCATIONCHANGE);
+	if (!events.empty()) {
+		for (CreatureEvent* creatureEvent : events) {
+			if (!creatureEvent->executeOnVocationChange(this, vocation, voc)) {
+				return false;
+			}
+		}
+	}
+
 	vocation = voc;
 
 	updateRegeneration();

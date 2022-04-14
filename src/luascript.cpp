@@ -1440,6 +1440,7 @@ void LuaScriptInterface::registerFunctions()
 	registerEnum(CREATURE_EVENT_TEXTEDIT)
 	registerEnum(CREATURE_EVENT_HEALTHCHANGE)
 	registerEnum(CREATURE_EVENT_MANACHANGE)
+	registerEnum(CREATURE_EVENT_ONVOCATIONCHANGE)
 	registerEnum(CREATURE_EVENT_EXTENDED_OPCODE)
 
 	registerEnum(GAME_STATE_STARTUP)
@@ -3034,6 +3035,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("CreatureEvent", "onHealthChange", LuaScriptInterface::luaCreatureEventOnCallback);
 	registerMethod("CreatureEvent", "onManaChange", LuaScriptInterface::luaCreatureEventOnCallback);
 	registerMethod("CreatureEvent", "onExtendedOpcode", LuaScriptInterface::luaCreatureEventOnCallback);
+	registerMethod("CreatureEvent", "onVocationChange", LuaScriptInterface::luaCreatureEventOnCallback);
 
 	// MoveEvent
 	registerClass("MoveEvent", "", LuaScriptInterface::luaCreateMoveEvent);
@@ -16097,6 +16099,8 @@ int LuaScriptInterface::luaCreatureEventType(lua_State* L)
 			creature->setEventType(CREATURE_EVENT_MANACHANGE);
 		} else if (tmpStr == "extendedopcode") {
 			creature->setEventType(CREATURE_EVENT_EXTENDED_OPCODE);
+		} else if (tmpStr == "vocationchange") {
+			creature->setEventType(CREATURE_EVENT_ONVOCATIONCHANGE);
 		} else {
 			std::cout << "[Error - CreatureEvent::configureLuaEvent] Invalid type for creature event: " << typeName << std::endl;
 			pushBoolean(L, false);

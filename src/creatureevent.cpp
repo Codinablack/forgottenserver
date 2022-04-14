@@ -197,6 +197,8 @@ bool CreatureEvent::configureEvent(const pugi::xml_node& node)
 		type = CREATURE_EVENT_MANACHANGE;
 	} else if (tmpStr == "extendedopcode") {
 		type = CREATURE_EVENT_EXTENDED_OPCODE;
+	} else if (tmpStr == "vocationchange") {
+		type = CREATURE_EVENT_ONVOCATIONCHANGE;
 	} else {
 		std::cout << "[Error - CreatureEvent::configureEvent] Invalid type for creature event: " << eventName << std::endl;
 		return false;
@@ -245,6 +247,9 @@ std::string CreatureEvent::getScriptEventName() const
 
 		case CREATURE_EVENT_EXTENDED_OPCODE:
 			return "onExtendedOpcode";
+
+		case CREATURE_EVENT_ONVOCATIONCHANGE:
+			return "onVocationChange";
 
 		case CREATURE_EVENT_NONE:
 		default:
@@ -564,6 +569,33 @@ void CreatureEvent::executeManaChange(Creature* creature, Creature* attacker, Co
 	}
 
 	scriptInterface->resetScriptEnv();
+}
+
+
+bool CreatureEvent::executeOnVocationChange(Player* player, Vocation* oldVocation, Vocation* newVocation)
+{
+	// onVocationChange(player, oldVocation, newVocation)
+	if (!scriptInterface->reserveScriptEnv()) {
+		std::cout << "[Error - CreatureEvent::executeOnVocationChange] Call stack overflow" << std::endl;
+		return false;
+	}
+
+	ScriptEnvironment* env = scriptInterface->getScriptEnv();
+	env->setScriptId(scriptId, scriptInterface);
+
+	lua_State* L = scriptInterface->getLuaState();
+	scriptInterface->pushFunction(scriptId);
+
+	LuaScriptInterface::pushUserdata(L, player);
+	LuaScriptInterface::setMetatable(L, -1, "Player");
+
+	LuaScriptInterface::pushUserdata(L, oldVocation);
+	LuaScriptInterface::setMetatable(L, -1, "Vocation");
+
+	LuaScriptInterface::pushUserdata(L, newVocation);
+	LuaScriptInterface::setMetatable(L, -1, "Vocation");
+
+	return scriptInterface->callFunction(3);
 }
 
 void CreatureEvent::executeExtendedOpcode(Player* player, uint8_t opcode, const std::string& buffer)

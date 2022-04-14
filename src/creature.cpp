@@ -8,6 +8,7 @@
 #include "monster.h"
 #include "configmanager.h"
 #include "scheduler.h"
+#include "events.h"
 
 double Creature::speedA = 857.36;
 double Creature::speedB = 261.29;
@@ -16,6 +17,7 @@ double Creature::speedC = -4795.01;
 extern Game g_game;
 extern ConfigManager g_config;
 extern CreatureEvents* g_creatureEvents;
+extern Events* g_events;
 
 Creature::Creature()
 {
