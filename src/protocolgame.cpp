@@ -328,8 +328,18 @@ void ProtocolGame::onRecvFirstMessage(NetworkMessage& msg)
 		opcodeMessage.add<uint16_t>(0x00);
 		writeToOutputBuffer(opcodeMessage);
 	}
+	// Change packet verifying mode for QT clients
+	if (version >= 1111 && operatingSystem >= CLIENTOS_QT_LINUX && operatingSystem < CLIENTOS_OTCLIENT_LINUX) {
+		setChecksumMode(CHECKSUM_SEQUENCE);
+	}
 
-	msg.skipBytes(1); // gamemaster flag
+	// Web login skips the character list request so we need to check the client version again
+	if (version < CLIENT_VERSION_MIN || version > CLIENT_VERSION_MAX) {
+		disconnectClient(fmt::format("Only clients with protocol {:s} allowed!", CLIENT_VERSION_STR));
+		return;
+	}
+
+	msg.skipBytes(1); // Gamemaster flag
 
 	std::string sessionKey = msg.getString();
 
