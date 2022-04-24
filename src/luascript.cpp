@@ -2742,6 +2742,7 @@ void LuaScriptInterface::registerFunctions()
 	registerMethod("ItemType", "getRequiredLevel", LuaScriptInterface::luaItemTypeGetRequiredLevel);
 	registerMethod("ItemType", "getAmmoType", LuaScriptInterface::luaItemTypeGetAmmoType);
 	registerMethod("ItemType", "getCorpseType", LuaScriptInterface::luaItemTypeGetCorpseType);
+	registerMethod("ItemType", "getShootType", LuaScriptInterface::luaItemTypeGetShootType);
 
 	registerMethod("ItemType", "getAbilities", LuaScriptInterface::luaItemTypeGetAbilities);
 
@@ -12260,6 +12261,19 @@ int LuaScriptInterface::luaItemTypeGetAmmoType(lua_State* L)
 	if (itemType) {
 		lua_pushnumber(L, itemType->ammoType);
 	} else {
+		lua_pushnil(L);
+	}
+	return 1;
+}
+
+int LuaScriptInterface::luaItemTypeGetShootType(lua_State* L)
+{
+	// itemType:getShootType()
+	const ItemType* itemType = getUserdata<const ItemType>(L, 1);
+	if (itemType) {
+		lua_pushnumber(L, itemType->shootType);
+	}
+	else {
 		lua_pushnil(L);
 	}
 	return 1;
